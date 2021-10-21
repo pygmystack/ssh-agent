@@ -1,6 +1,8 @@
-# ssh-agent
+# the pygmy stack - ssh-agent image
 
-ssh-agent in a container.
+This image is a multiarchitecture compatible docker image
+
+Originally derived from [whilp/ssh-agent](https://github.com/whilp/ssh-agent) it builds a docker image with openssh pre-installed and configured.
 
 ## Usage
 
