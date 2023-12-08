@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.19
 
 ENV SOCKET_DIR /tmp/amazeeio_ssh-agent
 ENV SSH_AUTH_SOCK ${SOCKET_DIR}/socket
