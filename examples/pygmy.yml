@@ -1,0 +1,5 @@
+services:
+  amazeeio-ssh-agent:
+    image: ghcr.io/pygmystack/ssh-agent:main
+  amazeeio-ssh-agent-add-key:
+    image: ghcr.io/pygmystack/ssh-agent:main
