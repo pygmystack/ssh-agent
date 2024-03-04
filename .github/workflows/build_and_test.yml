@@ -100,23 +100,27 @@ jobs:
           brew install pygmy;
           brew install dockerize;
           echo "/home/linuxbrew/.linuxbrew/bin" >> $GITHUB_PATH;
+          pygmy version;
       - 
-        name: Basic test
+        name: Switch pygmy configs from vanilla to basic
         run: |
+          pygmy status;
+          pygmy clean;
           pygmy --config examples/pygmy.basic.yml pull;
-          pygmy --config examples/pygmy.basic.yml status;
           pygmy --config examples/pygmy.basic.yml up;
+          sleep 10;
           pygmy --config examples/pygmy.basic.yml status;
-          pygmy --config examples/pygmy.basic.yml version;
       - 
         name: Show pygmy image versions
         run: |
           docker ps -a --filter "label=pygmy.name"
       - 
-        name: Export and show configuration
+        name: Export and show configuration - pygmy.basic.yml
         run: |
           pygmy --config examples/pygmy.basic.yml export -o ./exported-config.yml
           cat ./exported-config.yml
+          echo "Checking image references in started containers...";
+          docker container inspect amazeeio-ssh-agent   | jq '.[].Config.Image' | grep '${{ steps.meta.outputs.tags }}';
       - 
         name: Resolv file test
         run: |
@@ -168,20 +172,21 @@ jobs:
         run: |
           pygmy --config examples/pygmy.basic.yml up | grep 'holy ship' || true;
       - 
-        name: Test the container image overrides configuration as we switch configs
+        name: Switch pygmy configs from basic to vanilla
         run: |
-          echo "Checking image references in started containers...";
-          docker container inspect amazeeio-ssh-agent   | jq '.[].Config.Image' | grep '${{ steps.meta.outputs.tags }}';
+          pygmy --config examples/pygmy.basic.yml status;
           pygmy --config examples/pygmy.basic.yml clean;
+          pygmy --config examples/pygmy.yml pull;
           pygmy --config examples/pygmy.yml up;
+          sleep 10;
           pygmy --config examples/pygmy.yml status;
-          echo "Checking image references in started containers...";
-          docker container inspect amazeeio-ssh-agent   | jq '.[].Config.Image' | grep '${{ steps.meta.outputs.tags }}';
       - 
-        name: Export and show configuration
+        name: Export and show configuration - pygmy.yml
         run: |
           pygmy --config examples/pygmy.yml export -o ./exported-config-2.yml
           cat ./exported-config-2.yml
+          echo "Checking image references in started containers...";
+          docker container inspect amazeeio-ssh-agent   | jq '.[].Config.Image' | grep '${{ steps.meta.outputs.tags }}';
       - 
         name: SSH Key test
         run: |
