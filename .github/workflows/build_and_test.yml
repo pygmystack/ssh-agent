@@ -97,7 +97,7 @@ jobs:
         run: |
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)";
           brew tap pygmystack/pygmy;
-          brew install pygmy;
+          brew install pygmy --HEAD;
           brew install dockerize;
           echo "/home/linuxbrew/.linuxbrew/bin" >> $GITHUB_PATH;
           pygmy version;
