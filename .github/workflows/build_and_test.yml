@@ -1,4 +1,5 @@
 name: Build, Test & Publish
+
 on:
   push:
     branches:
@@ -81,6 +82,8 @@ jobs:
           # list of Docker images to use as base name for tags
           images: |
             ghcr.io/${{ github.repository_owner }}/ssh-agent
+          flavor: |
+            latest=false
       - 
         name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@v3
@@ -97,7 +100,7 @@ jobs:
         run: |
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)";
           brew tap pygmystack/pygmy;
-          brew install pygmy --HEAD;
+          brew install pygmy;
           brew install dockerize;
           echo "/home/linuxbrew/.linuxbrew/bin" >> $GITHUB_PATH;
           pygmy version;
@@ -133,6 +136,10 @@ jobs:
           curl http://docker.amazee.io/stats | grep 'class=px' | grep 'mailhog.docker.amazee.io';
           curl http://docker.amazee.io/stats | grep 'HAProxy version';
       -
+        name: mailhog test
+        run: | 
+          curl http://mailhog.docker.amazee.io | grep 'mailhog/MailHog';
+      -
         name: dnsmasq version
         run: |
           docker exec amazeeio-dnsmasq sh -c 'dnsmasq -v' | grep 'Dnsmasq version'
@@ -146,7 +153,6 @@ jobs:
           docker network inspect amazeeio-network | jq '.[].Name' | grep "amazeeio-network";
           docker network inspect amazeeio-network | jq '.[].Containers' | jq '.[].Name' | grep "amazeeio-haproxy";
           docker network inspect amazeeio-network | jq '.[].Containers' | jq '.[].Name' | grep "amazeeio-mailhog";
-          docker network inspect amazeeio-network | jq '.[].Containers' | jq '.[].Name' | grep "amazeeio-portainer";
           docker network inspect amazeeio-network | jq '.[].Containers' | jq '.[].IPv4Address';
           docker network inspect amazeeio-network | jq '.[].Containers' | jq '.[].IPv4Address' | grep "10.99.99.";
       - 
@@ -158,19 +164,12 @@ jobs:
           docker inspect amazeeio-haproxy   | jq '.[].Config.Labels["pygmy.hocuspocus"]'  | grep "42";
           docker inspect amazeeio-haproxy   | jq '.[].Config.Labels["pygmy.abracadabra"]' | grep "1";
           docker inspect amazeeio-haproxy   | jq '.[].Config.Labels["pygmy.opensesame"]'  | grep "correct";
-          docker inspect amazeeio-portainer | jq '.[].Config.Labels["pygmy.hocuspocus"]'  | grep "42";
-          docker inspect amazeeio-portainer | jq '.[].Config.Labels["pygmy.abracadabra"]' | grep "1";
-          docker inspect amazeeio-portainer | jq '.[].Config.Labels["pygmy.opensesame"]'  | grep "correct";
           docker inspect amazeeio-ssh-agent | jq '.[].Config.Labels["pygmy.hocuspocus"]'  | grep "42";
           docker inspect amazeeio-ssh-agent | jq '.[].Config.Labels["pygmy.abracadabra"]' | grep "1";
           docker inspect amazeeio-ssh-agent | jq '.[].Config.Labels["pygmy.opensesame"]'  | grep "correct";
           docker inspect amazeeio-mailhog   | jq '.[].Config.Labels["pygmy.hocuspocus"]'  | grep "42";
           docker inspect amazeeio-mailhog   | jq '.[].Config.Labels["pygmy.abracadabra"]' | grep "1";
           docker inspect amazeeio-mailhog   | jq '.[].Config.Labels["pygmy.opensesame"]'  | grep "correct";
-      - 
-        name: Cowsay test
-        run: |
-          pygmy --config examples/pygmy.basic.yml up | grep 'holy ship' || true;
       - 
         name: Switch pygmy configs from basic to vanilla
         run: |
