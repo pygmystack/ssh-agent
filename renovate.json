@@ -13,38 +13,5 @@
   ],
   "dependencyDashboard": true,
   "separateMajorMinor": true,
-  "prHourlyLimit": 0,
-  "packageRules": [
-    {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "matchBaseBranches": [
-        "main"
-      ],
-      "groupName": "GitHub actions monthly minor/patch",
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "digest"
-      ],
-      "schedule": ["on the first day of the month"],
-      "automerge": true,
-      "automergeType": "pr"
-    },
-    {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "matchBaseBranches": [
-        "main"
-      ],
-      "groupName": "GitHub actions major",
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "automerge": true,
-      "automergeType": "pr"
-    }
-  ]
+  "prHourlyLimit": 0
 }
