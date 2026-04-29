@@ -13,7 +13,7 @@ on:
 
 jobs:
   ci:
-    uses: pygmystack/.github/.github/workflows/container-build-test-publish.yml@main
+    uses: pygmystack/.github/.github/workflows/container-build-test-publish.yml@901048febada4e6ec1644c17e7c374ab627eb9db # main
     with:
       image_name: ssh-agent
       replace_source: ghcr.io/pygmystack/ssh-agent:main
