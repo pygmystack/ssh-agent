@@ -1,17 +1,6 @@
 {
-  "baseBranchPatterns": [
-    "main"
-  ],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "mergeConfidence:all-badges",
-    "config:recommended",
-    ":disableRateLimiting",
-    "helpers:pinGitHubActionDigests"
-  ],
-  "labels": [
-    "dependencies"
-  ],
-  "dependencyDashboard": true,
-  "separateMajorMinor": true,
-  "prHourlyLimit": 0
+    "config:recommended"
+  ]
 }
