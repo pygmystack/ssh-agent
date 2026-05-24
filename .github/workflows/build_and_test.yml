@@ -13,9 +13,10 @@ on:
 
 jobs:
   ci:
-    uses: pygmystack/.github/.github/workflows/container-build-test-publish.yml@main
+    uses: pygmystack/.github/.github/workflows/container-build-test-publish.yml@legacy-name
     with:
-      image_name: ssh-agent
+      image_name: ssh
+      image_name_legacy: ssh-agent
       replace_source: ghcr.io/pygmystack/ssh-agent:main
       oc_authors: the pygmy stack, Will Maier (original Docker image)
       oc_description: SSH agent service, configured for use with the pygmy stack
