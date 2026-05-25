@@ -12,7 +12,7 @@
 bats_require_minimum_version 1.5.0
 
 IMAGE="${IMAGE_NAME:-pygmystack/ssh-agent:test}"
-SSH_AUTH_SOCK_PATH="/tmp/amazeeio_ssh-agent/socket"
+SSH_AUTH_SOCK_PATH="/tmp/pygmy_ssh-agent/socket"
 
 # Container name is restored in setup() from the suffix written by setup_file(),
 # because BATS re-sources the file for every individual test.

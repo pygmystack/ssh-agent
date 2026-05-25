@@ -76,24 +76,24 @@ IMAGE="${IMAGE_NAME:-pygmystack/ssh-agent:test}"
 # Environment variables
 # ---------------------------------------------------------------------------
 
-@test "SOCKET_DIR is set to /tmp/amazeeio_ssh-agent" {
+@test "SOCKET_DIR is set to /tmp/pygmy_ssh-agent" {
     run docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' "${IMAGE}"
     [ "$status" -eq 0 ]
-    [[ "$output" =~ "SOCKET_DIR=/tmp/amazeeio_ssh-agent" ]]
+    [[ "$output" =~ "SOCKET_DIR=/tmp/pygmy_ssh-agent" ]]
 }
 
-@test "SSH_AUTH_SOCK is set to /tmp/amazeeio_ssh-agent/socket" {
+@test "SSH_AUTH_SOCK is set to /tmp/pygmy_ssh-agent/socket" {
     run docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' "${IMAGE}"
     [ "$status" -eq 0 ]
-    [[ "$output" =~ "SSH_AUTH_SOCK=/tmp/amazeeio_ssh-agent/socket" ]]
+    [[ "$output" =~ "SSH_AUTH_SOCK=/tmp/pygmy_ssh-agent/socket" ]]
 }
 
 # ---------------------------------------------------------------------------
 # Volume declaration (image metadata)
 # ---------------------------------------------------------------------------
 
-@test "image declares /tmp/amazeeio_ssh-agent as a volume" {
+@test "image declares /tmp/pygmy_ssh-agent as a volume" {
     run docker inspect --format='{{json .Config.Volumes}}' "${IMAGE}"
     [ "$status" -eq 0 ]
-    [[ "$output" =~ "/tmp/amazeeio_ssh-agent" ]]
+    [[ "$output" =~ "/tmp/pygmy_ssh-agent" ]]
 }
