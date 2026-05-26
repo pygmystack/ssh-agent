@@ -1,6 +1,6 @@
 FROM alpine:3.23
 
-ENV SOCKET_DIR=/tmp/pygmy_ssh-agent
+ENV SOCKET_DIR=/tmp/ssh-agent
 ENV SSH_AUTH_SOCK=${SOCKET_DIR}/socket
 
 RUN apk add --update --no-cache \
