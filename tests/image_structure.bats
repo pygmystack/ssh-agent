@@ -5,7 +5,7 @@
 
 bats_require_minimum_version 1.5.0
 
-IMAGE="${IMAGE_NAME:-pygmystack/ssh-agent:test}"
+IMAGE="${IMAGE_NAME:-pygmystack/ssh:test}"
 
 # ---------------------------------------------------------------------------
 # Binaries
@@ -76,24 +76,24 @@ IMAGE="${IMAGE_NAME:-pygmystack/ssh-agent:test}"
 # Environment variables
 # ---------------------------------------------------------------------------
 
-@test "SOCKET_DIR is set to /tmp/pygmy_ssh-agent" {
+@test "SOCKET_DIR is set to /tmp/ssh-agent" {
     run docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' "${IMAGE}"
     [ "$status" -eq 0 ]
-    [[ "$output" =~ "SOCKET_DIR=/tmp/pygmy_ssh-agent" ]]
+    [[ "$output" =~ "SOCKET_DIR=/tmp/ssh-agent" ]]
 }
 
-@test "SSH_AUTH_SOCK is set to /tmp/pygmy_ssh-agent/socket" {
+@test "SSH_AUTH_SOCK is set to /tmp/ssh-agent/socket" {
     run docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' "${IMAGE}"
     [ "$status" -eq 0 ]
-    [[ "$output" =~ "SSH_AUTH_SOCK=/tmp/pygmy_ssh-agent/socket" ]]
+    [[ "$output" =~ "SSH_AUTH_SOCK=/tmp/ssh-agent/socket" ]]
 }
 
 # ---------------------------------------------------------------------------
 # Volume declaration (image metadata)
 # ---------------------------------------------------------------------------
 
-@test "image declares /tmp/pygmy_ssh-agent as a volume" {
+@test "image declares /tmp/ssh-agent as a volume" {
     run docker inspect --format='{{json .Config.Volumes}}' "${IMAGE}"
     [ "$status" -eq 0 ]
-    [[ "$output" =~ "/tmp/pygmy_ssh-agent" ]]
+    [[ "$output" =~ "/tmp/ssh-agent" ]]
 }

@@ -1,4 +1,4 @@
-IMAGE_NAME ?= pygmystack/ssh-agent
+IMAGE_NAME ?= pygmystack/ssh
 IMAGE_TAG  ?= test
 FULL_IMAGE := $(IMAGE_NAME):$(IMAGE_TAG)
 
