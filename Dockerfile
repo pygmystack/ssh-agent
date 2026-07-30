@@ -1,10 +1,10 @@
-FROM alpine:3.23
+FROM alpine:3.24
 
 ENV SOCKET_DIR=/tmp/amazeeio_ssh-agent
 ENV SSH_AUTH_SOCK=${SOCKET_DIR}/socket
 
 RUN apk add --update --no-cache \
-      openssh=~10.2 \
+      openssh=~10.3 \
       sudo \
     && rm -rf /var/cache/apk/*
 RUN adduser -D -u 1000 drupal
